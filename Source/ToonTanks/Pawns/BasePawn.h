@@ -17,27 +17,22 @@ public:
 
 private:
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
 	class UCapsuleComponent* _capsule = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* _body = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* _turret = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* _projectileSpawnPoint = nullptr;
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float _speed = 10.f;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	void RotateTurretTowards(const FVector& target);
 };

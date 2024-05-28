@@ -1,9 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-#include "Components/CapsuleComponent.h"
 #include "BasePawn.h"
+#include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
-// Sets default values
 ABasePawn::ABasePawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -22,20 +20,16 @@ ABasePawn::ABasePawn()
 	this->_projectileSpawnPoint->AttachToComponent(this->_turret, FAttachmentTransformRules::SnapToTargetIncludingScale);
 }
 
-// Called when the game starts or when spawned
-void ABasePawn::BeginPlay()
+void ABasePawn::RotateTurretTowards(const FVector& target)
 {
-	Super::BeginPlay();
-}
+	FVector direction = target - this->_body->GetComponentLocation();
 
-// Called every frame
-void ABasePawn::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
+	if (direction.Length() < 1.f) return;
 
-// Called to bind functionality to input
-void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	FRotator rotation = direction.Rotation();
+	rotation.Pitch = 0.f;
+	rotation.Roll = 0.f;
+
+	FRotator newRotation = FMath::RInterpTo(this->_turret->GetComponentRotation(), rotation, UGameplayStatics::GetWorldDeltaSeconds(this), 5.f);
+	this->_turret->SetWorldRotation(newRotation);
 }
