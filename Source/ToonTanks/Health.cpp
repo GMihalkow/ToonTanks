@@ -48,5 +48,5 @@ void UHealth::DamageTaken(AActor* damagedActor, float damage, const UDamageType*
 
 	UE_LOG(LogTemp, Log, TEXT("HEALTH REMAINING -> %f"), this->_currentHealth);
 
-
+	this->_onDeathEvent.ExecuteIfBound();
 }

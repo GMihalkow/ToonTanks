@@ -29,7 +29,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat Configuration")
 	TSubclassOf<class AProjectile> _projectileBlueprint;
 
+	UPROPERTY()
+
 protected:
+	class UHealth* _health = nullptr;
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* _projectileSpawnPoint = nullptr;
@@ -40,4 +45,6 @@ protected:
 	void RotateTurretTowards(const FVector& target, float speed = 5.f);
 
 	void Fire();
+
+	virtual void OnDeath();
 };

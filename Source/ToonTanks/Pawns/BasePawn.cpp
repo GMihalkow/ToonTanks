@@ -2,6 +2,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "../Projectile.h"
+#include "../Health.h"
 
 ABasePawn::ABasePawn()
 {
@@ -19,6 +20,14 @@ ABasePawn::ABasePawn()
 
 	this->_projectileSpawnPoint = this->CreateDefaultSubobject<USceneComponent>(TEXT("PROJECTILES_SPAWN_POINT"));
 	this->_projectileSpawnPoint->AttachToComponent(this->_turret, FAttachmentTransformRules::SnapToTargetIncludingScale);
+}
+
+void ABasePawn::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// TODO [GM]: finish the health and "onDeath" implementation
+	this->_health = this->FindComponentByClass<UHealth>();
 }
 
 void ABasePawn::RotateTurretTowards(const FVector& target, float speed)
@@ -44,4 +53,9 @@ void ABasePawn::Fire()
 	}
 
 	DrawDebugSphere(this->GetWorld(), this->_projectileSpawnPoint->GetComponentLocation(), 10.f, 12, FColor::Red, false, 5.f);
+}
+
+void ABasePawn::OnDeath()
+{
+
 }

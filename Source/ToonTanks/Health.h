@@ -6,8 +6,9 @@
 #include "Components/ActorComponent.h"
 #include "Health.generated.h"
 
+DECLARE_DYNAMIC_DELEGATE(FHealthOnDeathEvent);
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TOONTANKS_API UHealth : public UActorComponent
 {
 	GENERATED_BODY()
@@ -18,10 +19,12 @@ private:
 
 	float _currentHealth = 0.f;
 
+	UPROPERTY()
+	FHealthOnDeathEvent _onDeathEvent;
+
 public:
 	// Sets default values for this component's properties
 	UHealth();
-
 
 protected:
 	// Called when the game starts

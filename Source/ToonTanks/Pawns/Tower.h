@@ -35,6 +35,8 @@ protected:
 
 	bool TargetIsInRange();
 
+	virtual void OnDeath() override;
+
 public:
 	virtual void Tick(float DeltaTime) override;
 };

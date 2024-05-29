@@ -48,3 +48,8 @@ bool ATower::TargetIsInRange()
 
 	return distance <= this->_aggroRange;
 }
+
+void ATower::OnDeath()
+{
+	Super::OnDeath();
+}

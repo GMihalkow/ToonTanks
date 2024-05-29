@@ -57,3 +57,16 @@ void ATank::Turn(float value)
 	FQuat delta = FQuat(this->GetActorUpVector(), value * FMath::DegreesToRadians(this->_turnRate) * UGameplayStatics::GetWorldDeltaSeconds(this));
 	this->AddActorLocalRotation(delta, true);
 }
+
+void ATank::OnDeath()
+{
+	Super::OnDeath();
+
+	this->SetActorHiddenInGame(true);
+	this->SetActorTickEnabled(false);
+
+	if (this->_controller == nullptr) return;
+
+	this->DisableInput(this->_controller);
+	this->_controller->bShowMouseCursor = false;
+}
