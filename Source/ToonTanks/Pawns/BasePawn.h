@@ -26,13 +26,18 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* _turret = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
-	USceneComponent* _projectileSpawnPoint = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Combat Configuration")
+	TSubclassOf<class AProjectile> _projectileBlueprint;
 
 protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
+	USceneComponent* _projectileSpawnPoint = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float _speed = 10.f;
 
-	void RotateTurretTowards(const FVector& target);
+	void RotateTurretTowards(const FVector& target, float speed = 5.f);
+
+	void Fire();
 };

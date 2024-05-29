@@ -26,6 +26,9 @@ private:
 	FName _turnAxis;
 
 	UPROPERTY(EditAnywhere, Category = "Tank Configuration")
+	FName _fireAction;
+
+	UPROPERTY(EditAnywhere, Category = "Tank Configuration")
 	float _turnRate = 100.f;
 
 	FVector _movementDirection = FVector::ZeroVector;
