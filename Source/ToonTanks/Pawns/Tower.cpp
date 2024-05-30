@@ -4,6 +4,8 @@
 #include "Tank.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
+#include "../Health.h"
+#include "../ToonTanksGameMode.h"
 
 ATower::ATower()
 {
@@ -32,7 +34,7 @@ void ATower::Tick(float DeltaTime)
 
 void ATower::OnShootTimer()
 {
-	if (!TargetIsInRange()) return;
+	if (this->_health->IsDead() || this->_gameMode->PlayerDied() || !TargetIsInRange()) return;
 
 	this->Fire();
 }
@@ -52,4 +54,6 @@ bool ATower::TargetIsInRange()
 void ATower::OnDeath()
 {
 	Super::OnDeath();
+
+	this->GetWorldTimerManager().ClearTimer(this->_timerHandle);
 }

@@ -32,6 +32,11 @@ void UHealth::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponen
 	// ...
 }
 
+bool UHealth::IsDead() const
+{
+	return this->_currentHealth <= 0;
+}
+
 void UHealth::DamageTaken(AActor* damagedActor, float damage, const UDamageType* type, AController* instigator, AActor* causer)
 {
 	if (this->_currentHealth <= 0)
@@ -41,12 +46,11 @@ void UHealth::DamageTaken(AActor* damagedActor, float damage, const UDamageType*
 
 	this->_currentHealth -= damage;
 
-	if (this->_currentHealth < 0)
-	{
-		this->_currentHealth = 0;
-	}
-
 	UE_LOG(LogTemp, Log, TEXT("HEALTH REMAINING -> %f"), this->_currentHealth);
 
-	this->_onDeathEvent.ExecuteIfBound();
+	if (this->_currentHealth <= 0)
+	{
+		this->_currentHealth = 0;
+		this->onDeathEvent.Broadcast();
+	}
 }

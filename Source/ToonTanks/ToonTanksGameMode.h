@@ -17,9 +17,13 @@ class TOONTANKS_API AToonTanksGameMode : public AGameModeBase
 private:
 	class ATank* _tank;
 
+	bool _playerDied = false;
+
 protected:
 	virtual void BeginPlay() override;
 
 public:
 	void OnActorDied(const AActor* actor);
+
+	bool PlayerDied() const;
 };

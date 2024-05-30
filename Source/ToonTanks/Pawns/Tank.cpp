@@ -62,9 +62,6 @@ void ATank::OnDeath()
 {
 	Super::OnDeath();
 
-	this->SetActorHiddenInGame(true);
-	this->SetActorTickEnabled(false);
-
 	if (this->_controller == nullptr) return;
 
 	this->DisableInput(this->_controller);

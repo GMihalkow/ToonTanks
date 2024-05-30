@@ -13,5 +13,16 @@ void AToonTanksGameMode::BeginPlay()
 
 void AToonTanksGameMode::OnActorDied(const AActor* actor)
 {
+	if (actor != this->_tank) return;
 
+	// TODO [GM]: execute player death clause
+
+	UE_LOG(LogTemp, Log, TEXT("THE PLAYER JUST DIED!"));
+
+	this->_playerDied = true;
+}
+
+bool AToonTanksGameMode::PlayerDied() const
+{
+	return this->_playerDied;
 }

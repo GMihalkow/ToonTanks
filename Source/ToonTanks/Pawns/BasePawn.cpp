@@ -3,6 +3,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "../Projectile.h"
 #include "../Health.h"
+#include "../ToonTanksGameMode.h"
 
 ABasePawn::ABasePawn()
 {
@@ -26,8 +27,9 @@ void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// TODO [GM]: finish the health and "onDeath" implementation
 	this->_health = this->FindComponentByClass<UHealth>();
+	this->_health->onDeathEvent.AddDynamic(this, &ABasePawn::OnDeath);
+	this->_gameMode = Cast<AToonTanksGameMode>(UGameplayStatics:: GetGameMode(this->GetWorld()));
 }
 
 void ABasePawn::RotateTurretTowards(const FVector& target, float speed)
@@ -57,5 +59,8 @@ void ABasePawn::Fire()
 
 void ABasePawn::OnDeath()
 {
-
+	this->SetActorHiddenInGame(true);
+	this->SetActorTickEnabled(false);
+	this->_gameMode->OnActorDied(this);
+	UE_LOG(LogTemp, Log, TEXT("%s JUST DIED"), *FString(this->GetOwner()->GetActorNameOrLabel()));
 }

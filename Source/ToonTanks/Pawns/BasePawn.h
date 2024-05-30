@@ -29,9 +29,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat Configuration")
 	TSubclassOf<class AProjectile> _projectileBlueprint;
 
-	UPROPERTY()
-
 protected:
+	UPROPERTY()
+	class AToonTanksGameMode* _gameMode;
+	
 	class UHealth* _health = nullptr;
 
 	virtual void BeginPlay() override;
@@ -46,5 +47,6 @@ protected:
 
 	void Fire();
 
+	UFUNCTION()
 	virtual void OnDeath();
 };
