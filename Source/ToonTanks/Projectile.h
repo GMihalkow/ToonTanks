@@ -6,12 +6,26 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
+class USoundBase;
+
 UCLASS()
 class TOONTANKS_API AProjectile : public AActor
 {
 	GENERATED_BODY()
 
 private:
+	UPROPERTY(EditAnywhere)
+	USoundBase* _hitSound = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* _launchSound = nullptr;
+
+	UPROPERTY(VisibleAnywhere)
+	class UParticleSystemComponent* _trail;
+
+	UPROPERTY(EditAnywhere)
+	class UParticleSystem* _hitEffectBlueprint;
+
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* _mesh = nullptr;
 

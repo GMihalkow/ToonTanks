@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -13,6 +14,9 @@ AProjectile::AProjectile()
 	this->_mesh = this->CreateDefaultSubobject<UStaticMeshComponent>("MESH");
 	this->RootComponent = this->_mesh;
 
+	this->_trail = this->CreateDefaultSubobject<UParticleSystemComponent>("TRAIL");
+	this->_trail->AttachToComponent(this->_mesh, FAttachmentTransformRules::SnapToTargetIncludingScale);
+
 	this->_movement = this->CreateDefaultSubobject<UProjectileMovementComponent>("MOVEMENT");
 }
 
@@ -21,6 +25,7 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
+	UGameplayStatics::PlaySoundAtLocation(this, this->_launchSound, this->GetActorLocation());
 	this->_mesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
@@ -33,15 +38,23 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* other, FVector impulse, const FHitResult& hit)
 {
+	if (this->GetOwner() == nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, this->_hitSound, hit.ImpactPoint);
+		Destroy();
+		return;
+	}
+
 	if (otherActor == nullptr || otherActor == this || otherActor == this->GetOwner())
 	{
 		return;
 	}
 
+	UGameplayStatics::PlaySoundAtLocation(this, this->_hitSound, hit.ImpactPoint);
 	AController* instigator = otherActor->GetInstigatorController();
 	UClass* dmgType = UDamageType::StaticClass();
 
 	UGameplayStatics::ApplyDamage(otherActor, this->_damage, instigator, this, dmgType);
-
+	UGameplayStatics::SpawnEmitterAtLocation(this->GetWorld(), this->_hitEffectBlueprint, this->GetActorLocation(), this->GetActorRotation());
 	Destroy();
 }

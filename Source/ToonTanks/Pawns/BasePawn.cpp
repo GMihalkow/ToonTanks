@@ -57,6 +57,8 @@ void ABasePawn::Fire()
 
 void ABasePawn::OnDeath()
 {
+	UGameplayStatics::PlaySoundAtLocation(this, this->_deathSound, this->GetActorLocation());
+	UGameplayStatics::SpawnEmitterAtLocation(this->GetWorld(), this->_deathEffect, this->GetActorLocation());
 	this->SetActorHiddenInGame(true);
 	this->SetActorTickEnabled(false);
 	this->_gameMode->OnActorDied(this);

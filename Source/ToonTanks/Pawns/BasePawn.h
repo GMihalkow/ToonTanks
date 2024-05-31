@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "BasePawn.generated.h"
 
+class USoundBase;
+
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn
 {
@@ -16,6 +18,9 @@ public:
 	ABasePawn();
 
 private:
+
+	UPROPERTY(EditAnywhere)
+	class UParticleSystem* _deathEffect = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Base Pawn Configuration", meta = (AllowPrivateAccess = "true"))
 	class UCapsuleComponent* _capsule = nullptr;
@@ -30,6 +35,9 @@ private:
 	TSubclassOf<class AProjectile> _projectileBlueprint;
 
 protected:
+	UPROPERTY(EditAnywhere)
+	USoundBase* _deathSound = nullptr;
+
 	UPROPERTY()
 	class AToonTanksGameMode* _gameMode;
 	
