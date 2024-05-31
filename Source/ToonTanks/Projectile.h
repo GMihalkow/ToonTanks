@@ -15,6 +15,9 @@ class TOONTANKS_API AProjectile : public AActor
 
 private:
 	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UCameraShakeBase> _hitCameraShake = nullptr;
+
+	UPROPERTY(EditAnywhere)
 	USoundBase* _hitSound = nullptr;
 
 	UPROPERTY(EditAnywhere)

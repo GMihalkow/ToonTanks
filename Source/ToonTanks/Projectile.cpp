@@ -40,6 +40,11 @@ void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, U
 {
 	if (this->GetOwner() == nullptr)
 	{
+		if (this->_hitCameraShake != nullptr) 
+		{
+			this->GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(this->_hitCameraShake);
+		}
+
 		UGameplayStatics::PlaySoundAtLocation(this, this->_hitSound, hit.ImpactPoint);
 		Destroy();
 		return;
@@ -48,6 +53,11 @@ void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, U
 	if (otherActor == nullptr || otherActor == this || otherActor == this->GetOwner())
 	{
 		return;
+	}
+
+	if (this->_hitCameraShake != nullptr)
+	{
+		this->GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(this->_hitCameraShake);
 	}
 
 	UGameplayStatics::PlaySoundAtLocation(this, this->_hitSound, hit.ImpactPoint);

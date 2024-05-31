@@ -63,6 +63,11 @@ void ATank::OnDeath()
 
 	if (this->_controller == nullptr) return;
 
+	if (this->_deathCameraShake != nullptr)
+	{
+		this->_controller->ClientStartCameraShake(this->_deathCameraShake);
+	}
+
 	this->DisableInput(this->_controller);
 	this->_controller->bShowMouseCursor = false;
 }

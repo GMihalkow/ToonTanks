@@ -12,6 +12,8 @@ class TOONTANKS_API ATank : public ABasePawn
 	GENERATED_BODY()
 
 private:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UCameraShakeBase> _deathCameraShake = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank Configuration", meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* _spring = nullptr;
