@@ -33,7 +33,6 @@ void ATank::Tick(float DeltaTime)
 
 	if (!this->_hitResult.bBlockingHit) return;
 
-	DrawDebugSphere(this->GetWorld(), this->_hitResult.ImpactPoint, 100.f, 12, FColor::Red, false);
 	this->RotateTurretTowards(this->_hitResult.ImpactPoint);
 }
 

@@ -53,8 +53,6 @@ void ABasePawn::Fire()
 		AProjectile* projectile = this->GetWorld()->SpawnActor<AProjectile>(this->_projectileBlueprint, this->_projectileSpawnPoint->GetComponentLocation(), this->_projectileSpawnPoint->GetComponentRotation());
 		projectile->SetOwner(this->GetOwner());
 	}
-
-	DrawDebugSphere(this->GetWorld(), this->_projectileSpawnPoint->GetComponentLocation(), 10.f, 12, FColor::Red, false, 5.f);
 }
 
 void ABasePawn::OnDeath()
